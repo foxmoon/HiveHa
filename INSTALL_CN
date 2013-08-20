@@ -1,0 +1,61 @@
+HiveHa基于Twisted框架开发。
+首先安装Twisted和依赖的zope.interface.
+wget http://tmrc.mit.edu/mirror/twisted/Twisted/8.1/Twisted-8.1.0.tar.bz2
+
+tar jxvf Twisted-8.1.0.tar.bz2
+
+cd Twisted-8.1.0
+
+python setup.py install
+
+wget --no-check-certificate https://pypi.python.org/packages/source/z/zope.interface/zope.interface-3.6.6.tar.gz
+
+tar zxf zope.interface-3.6.6.tar.gz
+
+cd zope.interface-3.6.6
+
+python setup.py install
+
+安装完毕后，git HiveHa。
+进行服务器配置，编辑配置文件
+vi  conf.py
+
+Ha服务器上运行
+sh reload.sh
+
+Node服务器上，复制所有文件。
+运行:
+sh reload_node.sh
+
+配置文件说明
+======
+#hive 集群配置，格式为 host_port ="port"，为提供服务的hive 服务器参数
+hostTmp={}
+#例子一，192.168.1.55端口为10001的hive server
+hostTmp["192.168.1.55_10001"]="10001"
+#例子二，192.168.1.55端口为10002的hive server
+hostTmp["192.168.1.55_10002"]="10002"
+
+#发送邮件通知的Url
+notify_url="http://127.0.0.1/send.php"
+
+#收件人邮箱
+notify_mail="notify@sb.com"
+
+#hive节点管理服务器端口，用作通知重启hive的端口
+manage_port=2003
+#HA server的端口，用作hive thrift 连接
+ha_port=8088
+#多少分钟检测黑名单中的hive 是否alive,如果alive，把该hive从blacklist移除
+black_check_time=10
+#是否记录查询的sql
+send_sql_debug=1
+#是否记录hive查询错误
+rec_error_debug=1
+#是否记录HA server链接状态
+server_stat_debug=1
+#检测hive 是否alive的sql,可以根据业务自己改写
+hive_valid_sql="show databases"
+########## for admin Node
+#hive 管理节点，启动hive的命令
+start_hive_cmd="export HADOOP_HOME=/usr; export JAVA_HOME=/usr/java/default;/usr/bin/hive --service hiveserver"
