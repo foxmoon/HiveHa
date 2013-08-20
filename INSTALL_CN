@@ -20,7 +20,12 @@ python setup.py install
 进行服务器配置，编辑配置文件
 vi  conf.py
 
+Ha服务器上运行
 sh reload.sh
+
+Node服务器上，复制所有文件。
+运行:
+sh reload_node.sh
 
 配置文件说明
 ======
